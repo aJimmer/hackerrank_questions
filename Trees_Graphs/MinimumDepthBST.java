@@ -28,11 +28,11 @@ public class BinarySearchTree {
 		BinarySearchTree bst = new BinarySearchTree();
 		bst.root = new Node(1);
 		bst.root.left = new Node(2);
-    	bst.root.right = new Node(3);
-    	bst.root.left.left = new Node(4);
-    	bst.root.left.right = new Node(5);
+    		bst.root.right = new Node(3);
+    		bst.root.left.left = new Node(4);
+    		bst.root.left.right = new Node(5);
 
-    	System.out.println("The minimum depth of " + "binary tree is : " + bst.minimumDepth());
+    		System.out.println("The minimum depth of " + "binary tree is : " + bst.minimumDepth());
 	}
 
 }
