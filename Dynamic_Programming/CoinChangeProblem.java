@@ -1,16 +1,18 @@
 import java.util.*;
 
-public class CoinChangeProblem {
+public class CoinChange {
 	
 	static int getWays(int [] arr, int n){
-		int[] table = new int[arr.length];
+		int[] table = new int[n + 1];
+		
 		table[0] = 1;
-		for (int i = 0; i < n; i++){
-			for (int j = arr[i]; j <= arr.length - 1; j++){
+		
+		for (int i = 0; i < arr.length; i++){
+			for (int j = arr[i]; j <= n; j++){
 				table[j] += table [j - arr[i]];
 			}
 		}
-		return table[arr.length - 1];
+		return table[n];
 	}
 	
 	public static void main(String[] args) {
@@ -23,6 +25,6 @@ public class CoinChangeProblem {
 		for (int i = 0; i < m; i++) {
 			arr[i] = in.nextInt();
 		}
-		System.out.println(getWays(arr, m));
+		System.out.println(getWays(arr, n));
 	}
 }
