@@ -1,5 +1,6 @@
 public class FindHighestProduct {
 	public static int findHighestProduct(int[] arr) {
+
 		int highest = Math.max(arr[0], arr[1]);
 		int lowest = Math.min(arr[0], arr[1]);
 		
@@ -20,6 +21,7 @@ public class FindHighestProduct {
 		
 		return highestProductOf3;
 	}
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		int[] test1 = { 5, 3, 10, 1, 20 };
