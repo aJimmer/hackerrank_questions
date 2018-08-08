@@ -73,4 +73,4 @@ public class GetProductsOfAllIntsExceptAtIndex {
 			System.out.println("All tests passed.");
 		}
 	}
-}
+}   
