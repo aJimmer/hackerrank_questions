@@ -1,4 +1,10 @@
+import static org.junit.Assert.*;
+
 import java.util.*;
+import org.junit.Test;
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
+import org.junit.runner.notification.Failure;
 
 public class Meeting {
 	
@@ -22,7 +28,7 @@ public class Meeting {
 		this.endTime = endTime;
 	}
 	
-	public static List<Meeting> mergeMeetings(List<Meeting> meetings) {
+	public static List<Meeting> mergeRanges(List<Meeting> meetings) {
 		List<Meeting> sortedMeeting = new ArrayList<>();
 		
 		for(Meeting meeting : meetings) {
@@ -51,18 +57,81 @@ public class Meeting {
 		return mergedMeetings;
 	}
 	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		List<Meeting> unmergedMeetings = new ArrayList<>();
-		
-		unmergedMeetings.add(new Meeting(0,1));
-		unmergedMeetings.add(new Meeting(3,5));
-		unmergedMeetings.add(new Meeting(4,8));
-		unmergedMeetings.add(new Meeting(10,12));
-		unmergedMeetings.add(new Meeting(9,10));
-		
-		for (Meeting meeting : mergeMeetings(unmergedMeetings)){
-			System.out.println("Meeting(" + meeting.getStartTime() + "," + meeting.getEndTime() + ")");
-		}
-	}
+	   @Test
+	    public void meetingsOverlapTest() {
+	        final List<Meeting> meetings = Arrays.asList(new Meeting(1, 3), new Meeting(2, 4));
+	        final List<Meeting> actual = mergeRanges(meetings);
+	        final List<Meeting> expected = Arrays.asList(new Meeting(1, 4));
+	        assertEquals(expected, actual);
+	    }
+
+	    @Test
+	    public void  meetingsTouchTest() {
+	        final List<Meeting> meetings = Arrays.asList(new Meeting(5, 6), new Meeting(6, 8));
+	        final List<Meeting> actual = mergeRanges(meetings);
+	        final List<Meeting> expected = Arrays.asList(new Meeting(5, 8));
+	        assertEquals(expected, actual);
+	    }
+
+	    @Test
+	    public void meetingContainsOtherMeetingTest() {
+	        final List<Meeting> meetings = Arrays.asList(new Meeting(1, 8), new Meeting(2, 5));
+	        final List<Meeting> actual = mergeRanges(meetings);
+	        final List<Meeting> expected = Arrays.asList(new Meeting(1, 8));
+	        assertEquals(expected, actual);
+	    }
+
+	    @Test
+	    public void meetingsStaySeparateTest() {
+	        final List<Meeting> meetings = Arrays.asList(new Meeting(1, 3), new Meeting(4, 8));
+	        final List<Meeting> actual = mergeRanges(meetings);
+	        final List<Meeting> expected = Arrays.asList(
+	            new Meeting(1, 3), new Meeting(4, 8)
+	        );
+	        assertEquals(expected, actual);
+	    }
+
+	    @Test
+	    public void multipleMergedMeetingsTest() {
+	        final List<Meeting> meetings = Arrays.asList(
+	            new Meeting(1, 4), new Meeting(2, 5), new Meeting (5, 8));
+	        final List<Meeting> actual = mergeRanges(meetings);
+	        final List<Meeting> expected = Arrays.asList(new Meeting(1, 8));
+	        assertEquals(expected, actual);
+	    }
+
+	    @Test
+	    public void meetingsNotSortedTest() {
+	        final List<Meeting> meetings = Arrays.asList(
+	            new Meeting(5, 8), new Meeting(1, 4), new Meeting(6, 8));
+	        final List<Meeting> actual = mergeRanges(meetings);
+	        final List<Meeting> expected = Arrays.asList( 
+	            new Meeting(1, 4), new Meeting(5, 8)
+	        );
+	        assertEquals(expected, actual);
+	    }
+
+	    @Test
+	    public void sampleInputTest() {
+	        final List<Meeting> meetings = Arrays.asList(
+	            new Meeting(0, 1), new Meeting(3, 5), new Meeting(4, 8),
+	            new Meeting(10, 12), new Meeting(9, 10) 
+	        );
+	        final List<Meeting> actual = mergeRanges(meetings);
+	        final List<Meeting> expected = Arrays.asList( 
+	            new Meeting(0, 1), new Meeting(3, 8), new Meeting(9, 12)
+	        );
+	        assertEquals(expected, actual);
+	    }
+
+	    public static void main(String[] args) {
+	        Result result = JUnitCore.runClasses(Meeting.class);
+	        for (Failure failure : result.getFailures()) {
+	            System.out.println(failure.toString());
+	        }
+	        if (result.wasSuccessful()) {
+	            System.out.println("All tests passed.");
+	        }
+	    }
 }
+
